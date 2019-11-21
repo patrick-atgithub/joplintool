@@ -1,6 +1,6 @@
 # joplintool
 
-joplintool (for joplin https://joplinapp.org/) by pat (based upon work from foxmask and tessus)
+joplintool (for [joplin](https://joplinapp.org/)) by pat (based upon work from foxmask and tessus)
 
   - checks and removes orphaned files in local resourcedir and remote sync dir
   - default is a dryrun, nothing will be deleted

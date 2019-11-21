@@ -105,6 +105,10 @@ class JoplinHelper():
         folders = len(self.sql_get_folders() )
         images =  len(self.sql_get_resources() )
         tags = len (self.sql_get_tags() )
+        
+        files_resource = [f for f in os.listdir(self.path_resources) if os.path.isfile(join(self.path_resources, f))]
+        len_files_in_resourcedir = sum( [os.path.getsize(join(self.path_resources,f)) for f in files_resource ] ) # get sum of all filesizes
+        
         print('\ninfo (data in database):')
         print('-----------------------')
         print('notes:   ', notes)
@@ -112,6 +116,7 @@ class JoplinHelper():
         print('images:  ', images)
         print('tags:    ', tags)
         print('total:   ', notes + folders + images +tags)
+        print('\ntotal size of images in resourcedir: {:,} bytes in {} images'.format(len_files_in_resourcedir, len(files_resource)))
         
         
     def check_resources(self, do_delete=False):    
@@ -131,6 +136,7 @@ class JoplinHelper():
         
         print ('\nchecking for additional files in resourcedir which are not in the database:')    # not sure if is of concern ...
         files_resource = [f for f in os.listdir(self.path_resources) if os.path.isfile(join(self.path_resources, f))]
+        
         files_db = self.sql_get_resources()
         files_additional = [f for f in files_resource if f not in files_db]
 
@@ -246,7 +252,7 @@ class JoplinHelper():
     
                 
     def check_dropbox(self, do_delete=False): # extract filetype fom md files
-        ''' checks if md files exist in database and resource dir '''
+        ''' checks if md files exist in database and resource dir'''
 
         def fmtprint(str1='',str2='',str3=''): # formatted output to 80 width console
             print('{:<15.13}{:<35.33}{:.28}'.format(str1,str2,str3))
@@ -367,7 +373,7 @@ BaseModel.typeEnum_ = [['TYPE_NOTE', 1],
 
 joplintool = JoplinHelper()
 
-parser = argparse.ArgumentParser(description= 'joplintool by pat (based upon work from foxmask and tessus)\n\n'
+parser = argparse.ArgumentParser(description= 'joplintool by pat 0.90 (based upon work from foxmask and tessus)\n\n'
                                  '  - checks and removes orphaned files in local resourcedir and remote sync dir\n'
                                  '  - default is a dryrun, nothing will be deleted\n'
                                  '  - removal of orphanes ignores timestamps...\n\n'

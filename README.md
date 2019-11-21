@@ -3,9 +3,10 @@
 joplintool (for [joplin](https://joplinapp.org/)) by pat (based upon work from foxmask and tessus)
 
   - checks and removes orphaned files in local resourcedir and remote sync dir
+  - shows some stats and a tree of your database
   - default is a dryrun, nothing will be deleted
   - removal of orphanes ignores timestamps...
-
+ 
   - use --force if you know what you are doing
   - EXPORT A BACKUP BEFORE USE !
 

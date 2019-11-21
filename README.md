@@ -10,8 +10,8 @@ joplintool by pat (based upon work from foxmask and tessus)
   - EXPORT A BACKUP BEFORE USE !
 
 optional arguments:
-  -h, --help                    show this help message and exit
-  -checkr, --checkresource s    checks for orphanes files in resourcedir
+
+  -checkr, --checkresources     checks for orphanes files in resourcedir
   -checkd, --checkdropbox       checks for orphanes files in dropboxdir
   -force, --force               enables delete for checkorphanes and checkdropbox
   -r, --recurse                 recurses through folders and notes / shows tree

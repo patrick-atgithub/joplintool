@@ -6,7 +6,7 @@ joplintool (for [joplin](https://joplinapp.org/)) by pat (based upon work from f
   - shows some stats and a tree of your database
   - default is a dryrun, nothing will be deleted
   - removal of orphanes ignores timestamps...
- 
+  - removal in resourcedir uses webinterface
   - use --force if you know what you are doing
   - EXPORT A BACKUP BEFORE USE !
 

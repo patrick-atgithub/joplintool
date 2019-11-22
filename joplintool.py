@@ -113,10 +113,10 @@ class JoplinHelper():
         print('-----------------------')
         print('notes:   ', notes)
         print('folders: ', folders)
-        print('images:  ', images)
+        print('images:   {}  ({:,} bytes)'.format(images, len_files_in_resourcedir, len(files_resource) ) )
         print('tags:    ', tags)
         print('total:   ', notes + folders + images +tags)
-        print('\ntotal size of images in resourcedir: {:,} bytes in {} images'.format(len_files_in_resourcedir, len(files_resource)))
+        #print('\ntotal size of images in resourcedir: {:,} bytes in {} images'.format(len_files_in_resourcedir, len(files_resource)))
         
         
     def check_resources(self, do_delete=False):    
@@ -277,7 +277,6 @@ class JoplinHelper():
         
         print('\nchecking dropbox(if notes, folder, images exist in database / resourcedir):')
         print('---------------------------------------------------------------------------')
-        print('01234567890123456789012345678901234567890123456789012345678901234567890123456789')
         n, special = 0, 0
         notecnt, foldercnt, imgcnt, tagcnt = 0,0,0,0
         
@@ -373,7 +372,7 @@ BaseModel.typeEnum_ = [['TYPE_NOTE', 1],
 
 joplintool = JoplinHelper()
 
-parser = argparse.ArgumentParser(description= 'joplintool by pat 0.90 (based upon work from foxmask and tessus)\n\n'
+parser = argparse.ArgumentParser(description= 'joplintool by pat 0.9.1 (based upon work from foxmask and tessus)\n\n'
                                  '  - checks and removes orphaned files in local resourcedir and remote sync dir\n'
                                  '  - default is a dryrun, nothing will be deleted\n'
                                  '  - removal of orphanes ignores timestamps...\n\n'

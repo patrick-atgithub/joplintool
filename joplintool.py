@@ -131,10 +131,8 @@ class JoplinHelper():
             for fname in self.orphanes:
                 print('not_associated: ', (fname))
         
-        if do_delete and self.orphanes != []:
-            res = self.del_orphanes()
-            if str(res) == '<Response [403 Forbidden]>':
-                print('cannot delete ... check token in joplintool.conf')
+                if do_delete:
+                    self.del_orphane(fname)
         
         print ('\nchecking for additional files in resourcedir which are not in the database:')    # not sure if is of concern ...
         files_resource = [f for f in os.listdir(self.path_resources) if os.path.isfile(join(self.path_resources, f))]
@@ -151,12 +149,14 @@ class JoplinHelper():
                     os.remove(join(self.path_resources,f))
                     print('deleted...')
         
-    def del_orphanes(self):
-        for fname in self.orphanes:
-            id = os.path.splitext(fname)[0]
-            res = asyncio.run(self.joplin.delete_resources(id))
-            print('deleting: {} {}'.format(fname, res))    
-            return res
+    def del_orphane(self, fname):
+        id = os.path.splitext(fname)[0]
+        res = asyncio.run(self.joplin.delete_resources(id))
+        print('deleting: {} {}'.format(fname, res))
+
+        if str(res) == '<Response [403 Forbidden]>':
+            print('cannot delete ... check token in joplintool.conf')
+
     
     def sql_align_db(self):
         cmd = 'VACUUM;'    

@@ -132,7 +132,9 @@ class JoplinHelper():
                 print('not_associated: ', (fname))
         
         if do_delete and self.orphanes != []:
-            self.del_orphanes()
+            res = self.del_orphanes()
+            if str(res) == '<Response [403 Forbidden]>':
+                print('cannot delete ... check token in joplintool.conf')
         
         print ('\nchecking for additional files in resourcedir which are not in the database:')    # not sure if is of concern ...
         files_resource = [f for f in os.listdir(self.path_resources) if os.path.isfile(join(self.path_resources, f))]
@@ -154,6 +156,7 @@ class JoplinHelper():
             id = os.path.splitext(fname)[0]
             res = asyncio.run(self.joplin.delete_resources(id))
             print('deleting: {} {}'.format(fname, res))    
+            return res
     
     def sql_align_db(self):
         cmd = 'VACUUM;'    
@@ -372,7 +375,7 @@ BaseModel.typeEnum_ = [['TYPE_NOTE', 1],
 
 joplintool = JoplinHelper()
 
-parser = argparse.ArgumentParser(description= 'joplintool by pat 0.9.1 (based upon work from foxmask and tessus)\n\n'
+parser = argparse.ArgumentParser(description= 'joplintool by pat 0.9.2 (based upon work from foxmask and tessus)\n\n'
                                  '  - checks and removes orphaned files in local resourcedir and remote sync dir\n'
                                  '  - default is a dryrun, nothing will be deleted\n'
                                  '  - removal of orphanes ignores timestamps...\n\n'

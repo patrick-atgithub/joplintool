@@ -1,6 +1,6 @@
 # joplintool
 
-joplintool 0.90 (for [joplin](https://joplinapp.org/)) by pat (based upon work from foxmask and tessus)
+joplintool 0.9.1 (for [joplin](https://joplinapp.org/)) by pat (based upon work from foxmask and tessus)
 
   - checks and removes orphaned files in local resourcedir and remote sync dir
   - shows some stats and a tree of your database

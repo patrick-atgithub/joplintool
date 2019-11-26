@@ -52,6 +52,7 @@ class JoplinHelper():
 
         except ConnectionRefusedError:
             print('cannot connect to web clipper....\nis joplin running ?\nalso check token in conf file')
+            exit()
             
         except BaseException as err:
             print(err)

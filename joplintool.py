@@ -8,9 +8,6 @@ try:
 except:
     print('needs python3... sorry ')
     exit()
-
-from os.path import join
-
 try:
     from joplin_api import JoplinApi
 
@@ -24,7 +21,7 @@ class JoplinHelper():
         try:
             self.orphanes = []
             
-            conf_file_abspath = join(os.path.dirname(__file__),'joplintool.conf')
+            conf_file_abspath = os.path.join(os.path.dirname(__file__),'joplintool.conf')
             config = configparser.ConfigParser()
             
             if config.read(conf_file_abspath) == []:
@@ -39,8 +36,8 @@ class JoplinHelper():
             
             self.path_joplin   = config['paths']['path_joplin'].strip('\'\"')    # strip '' and "" from strings
             self.path_Dropbox  = config['paths']['path_dropbox'].strip('\'\"')
-            self.path_db       = join(self.path_joplin, 'JoplinProfile', 'database.sqlite') 
-            self.path_resources= join(self.path_joplin, 'JoplinProfile', 'resources')
+            self.path_db       = os.path.join(self.path_joplin, 'JoplinProfile', 'database.sqlite') 
+            self.path_resources= os.path.join(self.path_joplin, 'JoplinProfile', 'resources')
             if not os.path.exists(self.path_db):
                 raise BaseException('wrongs paths ... check joplintool.conf')
             
@@ -107,8 +104,8 @@ class JoplinHelper():
         images =  len(self.sql_get_resources() )
         tags = len (self.sql_get_tags() )
         
-        files_resource = [f for f in os.listdir(self.path_resources) if os.path.isfile(join(self.path_resources, f))]
-        len_files_in_resourcedir = sum( [os.path.getsize(join(self.path_resources,f)) for f in files_resource ] ) # get sum of all filesizes
+        files_resource = [f for f in os.listdir(self.path_resources) if os.path.isfile(os.path.join(self.path_resources, f))]
+        len_files_in_resourcedir = sum( [os.path.getsize(os.path.join(self.path_resources,f)) for f in files_resource ] ) # get sum of all filesizes
         
         print('\ninfo (data in database):')
         print('-----------------------')
@@ -136,7 +133,7 @@ class JoplinHelper():
                     self.del_orphane(fname)
         
         print ('\nchecking for additional files in resourcedir which are not in the database:')    # not sure if is of concern ...
-        files_resource = [f for f in os.listdir(self.path_resources) if os.path.isfile(join(self.path_resources, f))]
+        files_resource = [f for f in os.listdir(self.path_resources) if os.path.isfile(os.path.join(self.path_resources, f))]
         
         files_db = self.sql_get_resources()
         files_additional = [f for f in files_resource if f not in files_db]
@@ -147,7 +144,7 @@ class JoplinHelper():
             for f in files_additional:
                 print(f)
                 if do_delete:
-                    os.remove(join(self.path_resources,f))
+                    os.remove(os.path.join(self.path_resources,f))
                     print('deleted...')
         
     def del_orphane(self, fname):
@@ -289,7 +286,7 @@ class JoplinHelper():
             
             if e == '.md':
                 n += 1
-                typ = get_type(join(self.path_Dropbox,f))
+                typ = get_type(os.path.join(self.path_Dropbox,f))
                                     
                 if typ == 1:
                     if id in notes:   
@@ -376,7 +373,7 @@ BaseModel.typeEnum_ = [['TYPE_NOTE', 1],
 
 joplintool = JoplinHelper()
 
-parser = argparse.ArgumentParser(description= 'joplintool by pat 0.9.2 (based upon work from foxmask and tessus)\n\n'
+parser = argparse.ArgumentParser(description= 'joplintool by pat 0.9.21 (based upon work from foxmask and tessus)\n\n'
                                  '  - checks and removes orphaned files in local resourcedir and remote sync dir\n'
                                  '  - default is a dryrun, nothing will be deleted\n'
                                  '  - removal of orphanes ignores timestamps...\n\n'
